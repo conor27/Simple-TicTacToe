@@ -169,13 +169,34 @@ def tictactoe():
 
         print()
 
+    def winCheck(board, letterToCheck):
+        if board[0] == letterToCheck and board[1] == letterToCheck and board[2] == letterToCheck:
+            return True
+        elif board[3] == letterToCheck and board[4] == letterToCheck and board[5] == letterToCheck:
+            return True
+        elif board[6] == letterToCheck and board[7] == letterToCheck and board[8] == letterToCheck:
+            return True
+        elif board[0] == letterToCheck and board[3] == letterToCheck and board[6] == letterToCheck:
+            return True
+        elif board[1] == letterToCheck and board[4] == letterToCheck and board[7] == letterToCheck:
+            return True
+        elif board[2] == letterToCheck and board[5] == letterToCheck and board[8] == letterToCheck:
+            return True
+        elif board[0] == letterToCheck and board[4] == letterToCheck and board[8] == letterToCheck:
+            return True
+        elif board[2] == letterToCheck and board[4] == letterToCheck and board[6] == letterToCheck:
+            return True
+        else:
+            return False
+
     def wannaplay():
         print("Do you wanna play tic tac toe?")
         while True:
             answer = input()
             if answer.lower() == "yes":
                 print("Great! I'll be X, and you'll be O")
-                time.sleep(2)
+                print()
+                time.sleep(1)
                 return True
             else:
                 print("Awe:( Are you sure?")
@@ -252,11 +273,14 @@ def tictactoe():
         # After win check, threat check, and then random move.
         if threatCheck(itemList, "X") != 10:
             punchX(threatCheck(itemList, "X"))
-            "I win! Better luck next time, Bucko."
+            printboard()
+            time.sleep(2)
+            print("I win! Better luck next time, bucko.")
+            exit()
 
         elif threatCheck(itemList, "O") != 10:
             punchX(threatCheck(itemList, "O"))
-            "Huhuhu. Stopped ya!"
+            print("Huhuhu. Stopped ya!")
 
         else:
             print("Not seeing any ways to win for either of us this time...")
@@ -269,10 +293,65 @@ def tictactoe():
                     punchX(cpuThirdMove)
 
         printboard()
-        print("We're really in the thick of it now. Your move.")
 
-# test
+        print("Your move.")
+        while True:
+            fourthMove = input()
+            if itemList[int(fourthMove)-1] != "X" and itemList[int(fourthMove)-1] != "O":
+                punchO(int(fourthMove)-1)
+                printboard()
+                break
+            else:
+                print("Sorry, that square's taken. Try again!")
+                print()
+                time.sleep(1)
+                print("Choose a space :)")
 
+        if winCheck(itemList, "O") == True:
+            time.sleep(2)
+            print("Wow. You win! Good work.")
+            exit()
+        else:
+            print("Nice one. Guess it's me again...")
+            time.sleep(2)
+
+        if threatCheck(itemList, "X") != 10:
+            punchX(threatCheck(itemList, "X"))
+            printboard()
+            print("Woo hoo! I win. Better luck next time.")
+            time.sleep(2)
+            exit()
+        elif threatCheck(itemList, "O") != 10:
+            punchX(threatCheck(itemList, "O"))
+            printboard()
+            print("Nice try! Stopped ya.")
+            time.sleep(2)
+        else:
+            while True:
+                cpuFourthMove = random.randrange(0, 8)
+                if itemList[cpuFourthMove] == str(cpuFourthMove+1):
+                    punchX(cpuFourthMove)
+                    printboard()
+                    print("I'm feeling pretty good about that one.")
+                    time.sleep(2)
+                    break
+        print("You're up. I'll just finish it up for you.")
+        time.sleep(1)
+
+        if threatCheck(itemList, "O") != 10:
+            punchO(threatCheck(itemList, "0"))
+            printboard()
+            print("You win... good game!")
+            time.sleep(2)
+        else:
+            while True:
+                finalMove = random.randrange(0,8)
+                if str(finalMove+1)  == itemList[finalMove]:
+                    punchO(finalMove)
+                    printboard()
+                    print("Cat's game! Thanks for playing!")
+                    time.sleep(2)
+                    break
 
 
 
